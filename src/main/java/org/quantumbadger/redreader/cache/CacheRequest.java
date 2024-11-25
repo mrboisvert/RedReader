@@ -67,7 +67,8 @@ public final class CacheRequest implements Comparable<CacheRequest> {
 	public enum RequestMethod {
 		GET,
 		POST,
-		DELETE
+		DELETE,
+		PUT
 	}
 
 	public final UriString url;
