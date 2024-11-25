@@ -1899,6 +1899,12 @@
 
 	<string name="album_pref_compact_title">Compact title</string>
 
+	<!-- 2024-11-24 -->
+	<string name="error_401_title">Unauthorized</string>
+	<string name="error_401_message">Reddit says that you are not logged in or have provided invalid credentials.</string>
+	<string name="error_400_title">Bad Request</string>
+	<string name="error_400_message">Reddit says that you have submitted something invalid.</string>
+
 	<!-- 2025-03-12 -->
 	<string name="video_speed_setting">Change video speed</string>
 	<string name="video_speed_instruction">Choose playback speed</string>
