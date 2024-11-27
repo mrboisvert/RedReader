@@ -1228,18 +1228,18 @@ public final class RedditAPI {
 			@NonNull final Context context,
 			@NonNull final CacheRequestCallbacks callbacks) {
 
-		return new CacheRequest(
-				url,
-				user,
-				null,
-				new Priority(Constants.Priority.API_ACTION),
-				DownloadStrategyAlways.INSTANCE,
-				Constants.FileType.NOCACHE,
-				CacheRequest.DownloadQueueType.REDDIT_API,
-				CacheRequest.RequestMethod.POST,
-				new HTTPRequestBody.PostFields(postFields),
-				context,
-				callbacks);
+		return new CacheRequest.Builder()
+				.setUrl(url)
+				.setUser(user)
+				.setPriority(new Priority(Constants.Priority.API_ACTION))
+				.setDownloadStrategy(DownloadStrategyAlways.INSTANCE)
+				.setFileType(Constants.FileType.NOCACHE)
+				.setQueueType(CacheRequest.DownloadQueueType.REDDIT_API)
+				.setRequestMethod(CacheRequest.RequestMethod.POST)
+				.setRequestBody(new HTTPRequestBody.PostFields(postFields))
+				.setContext(context)
+				.setCallbacks(callbacks)
+				.build();
 	}
 
 	@NonNull
@@ -1252,18 +1252,17 @@ public final class RedditAPI {
 			@NonNull final Context context,
 			@NonNull final CacheRequestJSONParser.Listener handler) {
 
-		return new CacheRequest(
-				url,
-				user,
-				null,
-				priority,
-				downloadStrategy,
-				fileType,
-				CacheRequest.DownloadQueueType.REDDIT_API,
-				CacheRequest.RequestMethod.GET,
-				null,
-				context,
-				new CacheRequestJSONParser(context, handler));
+		return new CacheRequest.Builder()
+				.setUrl(url)
+				.setUser(user)
+				.setPriority(priority)
+				.setDownloadStrategy(downloadStrategy)
+				.setFileType(fileType)
+				.setQueueType(CacheRequest.DownloadQueueType.REDDIT_API)
+				.setRequestMethod(CacheRequest.RequestMethod.GET)
+				.setContext(context)
+				.setCallbacks(new CacheRequestJSONParser(context, handler))
+				.build();
 	}
 
 	private static CacheRequest createDeleteRequest(
@@ -1272,18 +1271,17 @@ public final class RedditAPI {
 			@NonNull final Context context,
 			@NonNull final CacheRequestCallbacks handler) {
 
-		return new CacheRequest(
-				url,
-				user,
-				null,
-				new Priority(Constants.Priority.API_ACTION),
-				DownloadStrategyAlways.INSTANCE,
-				Constants.FileType.NOCACHE,
-				CacheRequest.DownloadQueueType.REDDIT_API,
-				CacheRequest.RequestMethod.DELETE,
-				null,
-				context,
-				handler);
+		return new CacheRequest.Builder()
+				.setUrl(url)
+				.setUser(user)
+				.setPriority(new Priority(Constants.Priority.API_ACTION))
+				.setDownloadStrategy(DownloadStrategyAlways.INSTANCE)
+				.setFileType(Constants.FileType.NOCACHE)
+				.setQueueType(CacheRequest.DownloadQueueType.REDDIT_API)
+				.setRequestMethod(CacheRequest.RequestMethod.DELETE)
+				.setContext(context)
+				.setCallbacks(handler)
+				.build();
 	}
 
 	private static CacheRequest createPutRequest(
@@ -1293,17 +1291,17 @@ public final class RedditAPI {
 			@NonNull final Context context,
 			@NonNull final CacheRequestJSONParser.Listener handler) {
 
-		return new CacheRequest(
-			url,
-			user,
-			null,
-			new Priority(Constants.Priority.API_ACTION),
-			DownloadStrategyAlways.INSTANCE,
-			Constants.FileType.NOCACHE,
-			CacheRequest.DownloadQueueType.REDDIT_API,
-			CacheRequest.RequestMethod.PUT,
-			new HTTPRequestBody.PostFields(postFields),
-			context,
-			new CacheRequestJSONParser(context, handler));
+		return new CacheRequest.Builder()
+				.setUrl(url)
+				.setUser(user)
+				.setPriority(new Priority(Constants.Priority.API_ACTION))
+				.setDownloadStrategy(DownloadStrategyAlways.INSTANCE)
+				.setFileType(Constants.FileType.NOCACHE)
+				.setQueueType(CacheRequest.DownloadQueueType.REDDIT_API)
+				.setRequestMethod(CacheRequest.RequestMethod.PUT)
+				.setRequestBody(new HTTPRequestBody.PostFields(postFields))
+				.setContext(context)
+				.setCallbacks(new CacheRequestJSONParser(context, handler))
+				.build();
 	}
 }
