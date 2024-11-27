@@ -6,7 +6,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-	<org.quantumbadger.redreader.views.LoadingSpinnerView
+	<org.quantumbadger.redreaderdev.views.LoadingSpinnerView
 			android:id="@+id/user_profile_loading"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

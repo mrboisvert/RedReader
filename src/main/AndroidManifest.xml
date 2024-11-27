@@ -37,7 +37,7 @@
 		</intent>
 	</queries>
 
-    <application android:name="org.quantumbadger.redreader.RedReader"
+    <application android:name="org.quantumbadger.redreaderdev.RedReader"
                  android:icon="@mipmap/icon"
                  android:label="@string/app_name"
                  android:theme="@style/RR.Startup"
@@ -220,8 +220,8 @@
         <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H" android:resource="@dimen/app_minimumsize_h" />
 
 		<provider
-				android:name="org.quantumbadger.redreader.cache.CacheContentProvider"
-				android:authorities="org.quantumbadger.redreader.cacheprovider"
+				android:name="org.quantumbadger.redreaderdev.cache.CacheContentProvider"
+				android:authorities="org.quantumbadger.redreaderdev.cacheprovider"
 				android:exported="false"
 				android:grantUriPermissions="true" />
     </application>

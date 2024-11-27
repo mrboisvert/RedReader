@@ -1,0 +1,89 @@
+/*******************************************************************************
+ * This file is part of RedReader.
+ *
+ * RedReader is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * RedReader is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with RedReader.  If not, see <http://www.gnu.org/licenses/>.
+ ******************************************************************************/
+
+package org.quantumbadger.redreaderdev.image;
+
+import android.content.Context;
+
+import androidx.annotation.NonNull;
+
+import org.quantumbadger.redreaderdev.account.RedditAccountManager;
+import org.quantumbadger.redreaderdev.cache.CacheManager;
+import org.quantumbadger.redreaderdev.cache.CacheRequest;
+import org.quantumbadger.redreaderdev.cache.CacheRequestJSONParser;
+import org.quantumbadger.redreaderdev.cache.downloadstrategy.DownloadStrategyIfNotCached;
+import org.quantumbadger.redreaderdev.common.Constants;
+import org.quantumbadger.redreaderdev.common.General;
+import org.quantumbadger.redreaderdev.common.Optional;
+import org.quantumbadger.redreaderdev.common.Priority;
+import org.quantumbadger.redreaderdev.common.RRError;
+import org.quantumbadger.redreaderdev.common.UriString;
+import org.quantumbadger.redreaderdev.common.time.TimestampUTC;
+import org.quantumbadger.redreaderdev.http.FailedRequestBody;
+import org.quantumbadger.redreaderdev.jsonwrap.JsonObject;
+import org.quantumbadger.redreaderdev.jsonwrap.JsonValue;
+
+import java.util.UUID;
+
+public final class GfycatAPI {
+
+	public static void getImageInfo(
+			final Context context,
+			final String imageId,
+			@NonNull final Priority priority,
+			final GetImageInfoListener listener) {
+
+		final UriString apiUrl = new UriString("https://api.gfycat.com/v1/gfycats/" + imageId);
+
+		CacheManager.getInstance(context).makeRequest(new CacheRequest(
+				apiUrl,
+				RedditAccountManager.getAnon(),
+				null,
+				priority,
+				DownloadStrategyIfNotCached.INSTANCE,
+				Constants.FileType.IMAGE_INFO,
+				CacheRequest.DownloadQueueType.IMMEDIATE,
+				context,
+				new CacheRequestJSONParser(context, new CacheRequestJSONParser.Listener() {
+					@Override
+					public void onJsonParsed(
+							@NonNull final JsonValue result,
+							final TimestampUTC timestamp,
+							@NonNull final UUID session, final boolean fromCache) {
+
+						try {
+							final JsonObject outer = result.asObject().getObject("gfyItem");
+							listener.onSuccess(ImageInfo.parseGfycat(outer));
+
+						} catch(final Throwable t) {
+							listener.onFailure(General.getGeneralErrorForFailure(
+									context,
+									CacheRequest.RequestFailureType.PARSE,
+									t,
+									null,
+									apiUrl,
+									Optional.of(new FailedRequestBody(result))));
+						}
+					}
+
+					@Override
+					public void onFailure(@NonNull final RRError error) {
+						listener.onFailure(error);
+					}
+				})));
+	}
+}

@@ -73,10 +73,10 @@ dependencies {
 android {
 	compileSdk = libs.versions.sdk.compile.get().toInt()
 	ndkVersion = libs.versions.ndk.get()
-	namespace = "org.quantumbadger.redreader"
+	namespace = "org.quantumbadger.redreaderdev"
 
 	defaultConfig {
-		applicationId = "org.quantumbadger.redreader"
+		applicationId = "org.quantumbadger.redreaderdev"
 		minSdk = libs.versions.sdk.min.get().toInt()
 		targetSdk = libs.versions.sdk.target.get().toInt()
 		versionCode = 114
