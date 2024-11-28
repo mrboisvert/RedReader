@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.quantumbadger.redreader.account.RedditAccount;
 import org.quantumbadger.redreader.activities.BugReportActivity;
@@ -1103,16 +1104,16 @@ public final class RedditAPI {
 			final String subredditName,
 			final Context context) {
 
-			final Uri.Builder builder = Constants.Reddit.getUriBuilder(
-							Constants.Reddit.PATH_MULTIREDDIT)
-					.appendPath("user")
-					.appendPath(user.username)
-					.appendPath("m")
-					.appendPath(multiredditName)
-					.appendPath("r")
-					.appendPath(subredditName);
+		final Uri.Builder builder = Constants.Reddit.getUriBuilder(
+						Constants.Reddit.PATH_MULTIREDDIT)
+				.appendPath("user")
+				.appendPath(user.username)
+				.appendPath("m")
+				.appendPath(multiredditName)
+				.appendPath("r")
+				.appendPath(subredditName);
 
-			cm.makeRequest(createDeleteRequest(
+		cm.makeRequest(createDeleteRequest(
 				UriString.from(builder.build()),
 				user,
 				context,
@@ -1133,6 +1134,35 @@ public final class RedditAPI {
 						handler.notifyFailure(error);
 					}
 				}));
+	}
+
+	public static void createMultireddit(
+		final CacheManager cm,
+		final APIResponseHandler.ActionResponseHandler handler,
+		final RedditAccount user,
+		final String multiredditName,
+		final List<String> subredditNames,
+		final Context context) {
+
+		final Uri.Builder builder = Constants.Reddit.getUriBuilder(
+				Constants.Reddit.PATH_MULTIREDDIT)
+			.appendPath("user")
+			.appendPath(user.username)
+			.appendPath("m")
+			.appendPath(multiredditName);
+
+		final Map<String, String> jsonData = new HashMap<>();
+		jsonData.put("display_name", multiredditName);
+		jsonData.put("visibility", "private");
+		jsonData.put("subreddits", new JSONArray(subredditNames).toString());
+
+		cm.makeRequest(createPostRequest(
+			UriString.from(builder.build()),
+			user,
+			new ArrayList<>(Collections.singleton(
+				new PostField("model", new JSONObject(jsonData).toString()))),
+			context,
+			new GenericResponseHandler(handler)));
 	}
 
 	@Nullable
