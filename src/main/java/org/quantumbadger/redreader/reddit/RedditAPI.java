@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONObject;
 import org.quantumbadger.redreader.account.RedditAccount;
 import org.quantumbadger.redreader.activities.BugReportActivity;
 import org.quantumbadger.redreader.cache.CacheManager;
@@ -65,6 +66,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -1064,7 +1066,7 @@ public final class RedditAPI {
 				}));
 	}
 
-	public static void removeSubredditFromMultireddit(
+	public static void addSubredditToMultireddit(
 			final CacheManager cm,
 			final APIResponseHandler.ActionResponseHandler handler,
 			final RedditAccount user,
@@ -1081,7 +1083,36 @@ public final class RedditAPI {
 				.appendPath("r")
 				.appendPath(subredditName);
 
-		cm.makeRequest(createDeleteRequest(
+		final Map<String, String> jsonData = new HashMap<>();
+		jsonData.put("name", subredditName);
+
+		cm.makeRequest(createPutRequest(
+				UriString.from(builder.build()),
+				user,
+				new ArrayList<>(Collections.singleton(
+						new PostField("model", new JSONObject(jsonData).toString()))),
+				context,
+				new GenericResponseHandler(handler)));
+	}
+
+	public static void removeSubredditFromMultireddit(
+			final CacheManager cm,
+			final APIResponseHandler.ActionResponseHandler handler,
+			final RedditAccount user,
+			final String multiredditName,
+			final String subredditName,
+			final Context context) {
+
+			final Uri.Builder builder = Constants.Reddit.getUriBuilder(
+							Constants.Reddit.PATH_MULTIREDDIT)
+					.appendPath("user")
+					.appendPath(user.username)
+					.appendPath("m")
+					.appendPath(multiredditName)
+					.appendPath("r")
+					.appendPath(subredditName);
+
+			cm.makeRequest(createDeleteRequest(
 				UriString.from(builder.build()),
 				user,
 				context,
