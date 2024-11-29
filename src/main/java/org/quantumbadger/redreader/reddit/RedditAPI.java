@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.quantumbadger.redreader.account.RedditAccount;
 import org.quantumbadger.redreader.activities.BugReportActivity;
@@ -67,7 +68,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -1151,18 +1151,28 @@ public final class RedditAPI {
 			.appendPath("m")
 			.appendPath(multiredditName);
 
-		final Map<String, String> jsonData = new HashMap<>();
-		jsonData.put("display_name", multiredditName);
-		jsonData.put("visibility", "private");
-		jsonData.put("subreddits", new JSONArray(subredditNames).toString());
+		final JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("display_name", multiredditName);
+			jsonObject.put("subreddits", subredditNamesJson(subredditNames));
+		} catch (final JSONException e) {
+			throw new RuntimeException(e);
+		}
 
 		cm.makeRequest(createPostRequest(
 			UriString.from(builder.build()),
 			user,
 			new ArrayList<>(Collections.singleton(
-				new PostField("model", new JSONObject(jsonData).toString()))),
+				new PostField("model", jsonObject.toString()))),
 			context,
 			new GenericResponseHandler(handler)));
+	}
+
+	private static JSONArray subredditNamesJson(final List<String> subredditNames) {
+		final JSONArray jsonArray = new JSONArray();
+		subredditNames.stream().forEach(
+				sn -> jsonArray.put(new JSONObject(Collections.singletonMap("name", sn))));
+		return jsonArray;
 	}
 
 	@Nullable
