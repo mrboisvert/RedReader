@@ -26,7 +26,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.quantumbadger.redreader.account.RedditAccount;
 import org.quantumbadger.redreader.account.RedditAccountManager;
+import org.quantumbadger.redreader.common.PrefsUtility;
+
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 public class RedditAPISubredditCombinationAction {
@@ -51,6 +54,13 @@ public class RedditAPISubredditCombinationAction {
 	public static void showActionMenu(
 			final AppCompatActivity activity,
 			List<String> subredditNames) {
+
+		final EnumSet<SubredditCombinationAction> itemPref
+				= PrefsUtility.pref_menus_subreddit_combination_context_items();
+
+		if(itemPref.isEmpty()) {
+			return;
+		}
 
 		final RedditAccount user =
 				RedditAccountManager.getInstance(activity).getDefaultAccount();
