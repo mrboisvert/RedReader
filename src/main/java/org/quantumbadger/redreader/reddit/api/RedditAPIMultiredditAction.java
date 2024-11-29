@@ -127,6 +127,7 @@ public class RedditAPIMultiredditAction {
 		switch(action) {
 			case REMOVE_SUBREDDIT:
 				RemoveSubredditFromMultiDialog.show(activity, multiredditName, user);
+				break;
 			case DELETE_MULTIREDDIT:
 				new MaterialAlertDialogBuilder(activity)
 						.setTitle(activity.getString(R.string.delete_multireddit_confirmation))
