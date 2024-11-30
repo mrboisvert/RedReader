@@ -447,6 +447,7 @@ object UserProfileDialog {
 			DownloadStrategyIfNotCached.INSTANCE,
 			Constants.FileType.INLINE_IMAGE_PREVIEW,
 			CacheRequest.DownloadQueueType.IMMEDIATE,
+			CacheRequest.RequestMethod.GET,
 			context,
 			object : CacheRequestCallbacks {
 				override fun onDataStreamComplete(

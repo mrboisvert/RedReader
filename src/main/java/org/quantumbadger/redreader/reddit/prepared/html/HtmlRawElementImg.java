@@ -88,6 +88,7 @@ public class HtmlRawElementImg extends HtmlRawElement{
 				DownloadStrategyIfNotCached.INSTANCE,
 				Constants.FileType.IMAGE,
 				CacheRequest.DownloadQueueType.IMMEDIATE,
+				CacheRequest.RequestMethod.GET,
 				activity,
 				new CacheRequestCallbacks() {
 					Bitmap image = null;

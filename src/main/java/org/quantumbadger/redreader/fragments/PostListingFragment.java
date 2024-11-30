@@ -646,6 +646,7 @@ public class PostListingFragment extends RRFragment
 				downloadStrategy,
 				Constants.FileType.POST_LIST,
 				CacheRequest.DownloadQueueType.REDDIT_API,
+				CacheRequest.RequestMethod.GET,
 				activity,
 				new CacheRequestCallbacks() {
 					@Override
@@ -999,6 +1000,7 @@ public class PostListingFragment extends RRFragment
 								TimestampBound.notOlderThan(TimeDuration.minutes(15))),
 						Constants.FileType.COMMENT_LIST,
 						CacheRequest.DownloadQueueType.REDDIT_API,
+						CacheRequest.RequestMethod.GET,
 						// Don't parse the JSON
 						activity,
 						new CacheRequestCallbacks() {
@@ -1114,6 +1116,7 @@ public class PostListingFragment extends RRFragment
 				DownloadStrategyIfNotCached.INSTANCE,
 				Constants.FileType.IMAGE,
 				CacheRequest.DownloadQueueType.IMAGE_PRECACHE,
+				CacheRequest.RequestMethod.GET,
 				activity,
 				new CacheRequestCallbacks() {
 					@Override
