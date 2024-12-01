@@ -1909,6 +1909,8 @@
 	<string name="pref_menus_multireddits_context_items_key">pref_menus_multireddit_context_items</string>
 	<string name="pref_menus_multireddits_context_items_title">Action menu items</string>
 
+	<string name="remove_from_multireddit">Remove Subreddit from Multireddit</string>>
+
 	<!-- 2025-03-12 -->
 	<string name="video_speed_setting">Change video speed</string>
 	<string name="video_speed_instruction">Choose playback speed</string>
