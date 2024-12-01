@@ -18,7 +18,10 @@
 package org.quantumbadger.redreader.reddit.api;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,16 +30,25 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.quantumbadger.redreader.R;
 import org.quantumbadger.redreader.account.RedditAccount;
 import org.quantumbadger.redreader.account.RedditAccountManager;
+import org.quantumbadger.redreader.cache.CacheManager;
 import org.quantumbadger.redreader.common.PrefsUtility;
 import org.quantumbadger.redreader.fragments.RemoveSubredditFromMultiDialog;
+import org.quantumbadger.redreader.common.RRError;
+import org.quantumbadger.redreader.common.TimestampBound;
+import org.quantumbadger.redreader.reddit.APIResponseHandler;
+import org.quantumbadger.redreader.reddit.RedditAPI;
+import org.quantumbadger.redreader.views.liststatus.ErrorView;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 
 public class RedditAPIMultiredditAction {
 
+	private static final String TAG = "MultiredditAction";
+
 	public enum MultiredditAction {
-		REMOVE_SUBREDDIT
+		REMOVE_SUBREDDIT,
+		DELETE_MULTIREDDIT;
 	}
 
 	private static class RCVMenuItem {
@@ -75,9 +87,16 @@ public class RedditAPIMultiredditAction {
 
 		if(itemPref.contains(MultiredditAction.REMOVE_SUBREDDIT)) {
 			menu.add(new RCVMenuItem(
-				activity,
-				R.string.remove_from_multireddit,
-				MultiredditAction.REMOVE_SUBREDDIT));
+					activity,
+					R.string.remove_from_multireddit,
+					MultiredditAction.REMOVE_SUBREDDIT));
+		}
+
+		if(itemPref.contains(MultiredditAction.DELETE_MULTIREDDIT)) {
+			menu.add(new RCVMenuItem(
+					activity,
+					R.string.delete_multireddit,
+					MultiredditAction.DELETE_MULTIREDDIT));
 		}
 
 		final String[] menuText = new String[menu.size()];
@@ -108,6 +127,71 @@ public class RedditAPIMultiredditAction {
 		switch(action) {
 			case REMOVE_SUBREDDIT:
 				RemoveSubredditFromMultiDialog.show(activity, multiredditName, user);
+			case DELETE_MULTIREDDIT:
+				new MaterialAlertDialogBuilder(activity)
+						.setTitle(activity.getString(R.string.delete_multireddit_confirmation))
+						.setMessage(activity.getString(R.string.are_you_sure_delete_multireddit))
+						.setPositiveButton(
+								activity.getString(R.string.dialog_yes),
+								((dialog, which) -> {
+									Toast.makeText(
+											activity,
+											String.format("Deleting %s", multiredditName),
+											Toast.LENGTH_SHORT).show();
+									RedditAPI.deleteMultireddit(
+											CacheManager.getInstance(activity),
+											new APIResponseHandler.ActionResponseHandler(
+													activity) {
+
+												@Override
+												protected void onCallbackException(
+														final Throwable t) {
+													Log.e(
+															TAG,
+															"Error while deleting multireddit",
+															t);
+													throw new RuntimeException(t);
+												}
+
+												@Override
+												protected void onFailure(
+														@NonNull final RRError error) {
+													activity.runOnUiThread(() -> {
+														final MaterialAlertDialogBuilder builder
+																= new MaterialAlertDialogBuilder(
+																		activity);
+														builder.setView(
+																new ErrorView(activity, error));
+														builder.create().show();
+													});
+												}
+
+												@Override
+												protected void onSuccess() {
+													activity.runOnUiThread(() -> Toast.makeText(
+															activity,
+															String.format(
+																	"Deleted %s", multiredditName),
+															Toast.LENGTH_SHORT).show());
+
+													RedditMultiredditSubscriptionManager
+															.getSingleton(activity,
+																	RedditAccountManager
+																			.getInstance(activity)
+																			.getDefaultAccount())
+															.triggerUpdate(
+																	null,
+																	TimestampBound.NONE);
+												}
+											},
+											user,
+											multiredditName,
+											activity
+									);
+									dialog.dismiss();
+								}))
+						.setNegativeButton(activity.getString(R.string.dialog_cancel), null)
+						.show();
 		}
 	}
 }
