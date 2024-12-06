@@ -278,6 +278,13 @@ public class PostListingFragment extends RRFragment
 				break;
 
 			case RedditURLParser.USER_POST_LISTING_URL:
+				setHeader(
+						mPostListingURL.humanReadableName(getActivity(), true),
+						mPostListingURL.humanReadableUrl(),
+						null);
+				CacheManager.getInstance(context).makeRequest(mRequest);
+				break;
+
 			case RedditURLParser.MULTIREDDIT_POST_LISTING_URL:
 				setMultiredditHeader(
 						mPostListingURL.humanReadableName(getActivity(), true),
