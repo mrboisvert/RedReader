@@ -484,8 +484,8 @@ public class FileUtils {
 				.setUser(RedditAccountManager.getAnon())
 				.setPriority(new Priority(Constants.Priority.IMAGE_VIEW))
 				.setDownloadStrategy(DownloadStrategyIfNotCached.INSTANCE)
-				.setFileType(Constants.FileType.NOCACHE)
-				.setQueueType(CacheRequest.DownloadQueueType.REDDIT_API)
+				.setFileType(Constants.FileType.IMAGE)
+				.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(activity)
 				.setCallbacks(new CacheRequestCallbacks() {
