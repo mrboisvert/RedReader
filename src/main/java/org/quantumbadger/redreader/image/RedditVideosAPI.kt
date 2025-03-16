@@ -73,6 +73,7 @@ object RedditVideosAPI {
 			.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 			.setRequestMethod(CacheRequest.RequestMethod.GET)
 			.setContext(context)
+			.setCache(true)
 			.setCallbacks(
 				object : CacheRequestCallbacks {
 					private val mNotifiedFailure = AtomicBoolean(false)

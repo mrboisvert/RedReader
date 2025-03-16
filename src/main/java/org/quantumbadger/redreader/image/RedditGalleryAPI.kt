@@ -95,6 +95,7 @@ class RedditGalleryAPI {
 					.setQueueType(CacheRequest.DownloadQueueType.REDDIT_API)
 					.setRequestMethod(CacheRequest.RequestMethod.GET)
 					.setContext(context)
+					.setCache(true)
 					.setCallbacks(
 						object : CacheRequestCallbacks {
 

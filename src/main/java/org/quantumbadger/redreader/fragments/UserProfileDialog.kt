@@ -448,6 +448,7 @@ object UserProfileDialog {
 			.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 			.setRequestMethod(CacheRequest.RequestMethod.GET)
 			.setContext(context)
+			.setCache(true)
 			.setCallbacks(object : CacheRequestCallbacks {
 				override fun onDataStreamComplete(
 					streamFactory: GenericFactory<SeekableInputStream, IOException>,

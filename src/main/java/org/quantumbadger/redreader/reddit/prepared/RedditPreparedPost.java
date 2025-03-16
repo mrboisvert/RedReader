@@ -743,6 +743,7 @@ public final class RedditPreparedPost implements RedditChangeDataManager.Listene
 				.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(context)
+				.setCache(true)
 				.setCallbacks(new CacheRequestCallbacks() {
 
 					@Override

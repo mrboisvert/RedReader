@@ -100,6 +100,7 @@ public class RedditAPIMultiredditListRequester implements CacheDataSource<
 				.setQueueType(CacheRequest.DownloadQueueType.REDDIT_API)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(context)
+				.setCache(true)
 				.setCallbacks(new CacheRequestJSONParser(
 						context, new CacheRequestJSONParser.Listener() {
 							@Override

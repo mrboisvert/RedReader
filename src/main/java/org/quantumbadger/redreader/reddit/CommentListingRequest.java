@@ -248,6 +248,7 @@ public class CommentListingRequest {
 				.setQueueType(CacheRequest.DownloadQueueType.REDDIT_API)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(mContext)
+				.setCache(true)
 				.setCallbacks(new CacheRequestCallbacks() {
 					@Override
 					public void onFailure(@NonNull final RRError error) {
