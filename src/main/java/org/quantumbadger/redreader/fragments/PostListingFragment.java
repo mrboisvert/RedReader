@@ -726,6 +726,7 @@ public class PostListingFragment extends RRFragment
 				.setQueueType(CacheRequest.DownloadQueueType.REDDIT_API)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(activity)
+				.setCache(true)
 				.setCallbacks(new CacheRequestCallbacks() {
 					@Override
 					public void onDataStreamComplete(
@@ -1077,6 +1078,7 @@ public class PostListingFragment extends RRFragment
 				.setQueueType(CacheRequest.DownloadQueueType.REDDIT_API)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(activity)
+				.setCache(true)
 				.setCallbacks(new CacheRequestCallbacks() {
 					@Override
 					public void onFailure(@NonNull final RRError error) {
@@ -1190,6 +1192,7 @@ public class PostListingFragment extends RRFragment
 				.setQueueType(CacheRequest.DownloadQueueType.IMAGE_PRECACHE)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(activity)
+				.setCache(true)
 				.setCallbacks(new CacheRequestCallbacks() {
 					@Override
 					public void onFailure(@NonNull final RRError error) {

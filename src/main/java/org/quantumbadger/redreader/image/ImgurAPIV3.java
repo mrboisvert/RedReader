@@ -62,6 +62,7 @@ public final class ImgurAPIV3 {
 						: CacheRequest.DownloadQueueType.IMMEDIATE)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(context)
+				.setCache(true)
 				.setCallbacks(
 						new CacheRequestJSONParser(context, new CacheRequestJSONParser.Listener() {
 							@Override
@@ -115,6 +116,7 @@ public final class ImgurAPIV3 {
 						: CacheRequest.DownloadQueueType.IMMEDIATE)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(context)
+				.setCache(true)
 				.setCallbacks(
 						new CacheRequestJSONParser(context, new CacheRequestJSONParser.Listener() {
 							@Override

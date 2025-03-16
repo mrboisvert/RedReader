@@ -87,6 +87,7 @@ public class HtmlRawElementImg extends HtmlRawElement{
 				.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(activity)
+				.setCache(true)
 				.setCallbacks(new CacheRequestCallbacks() {
 					Bitmap image = null;
 

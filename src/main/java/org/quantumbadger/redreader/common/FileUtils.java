@@ -487,6 +487,7 @@ public class FileUtils {
 				.setFileType(Constants.FileType.IMAGE)
 				.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
+				.setCache(true)
 				.setContext(activity)
 				.setCallbacks(new CacheRequestCallbacks() {
 
@@ -605,6 +606,7 @@ public class FileUtils {
 								.setFileType(Constants.FileType.IMAGE)
 								.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 								.setRequestMethod(CacheRequest.RequestMethod.GET)
+								.setCache(true)
 								.setContext(activity)
 								.setCallbacks(new CacheRequestCallbacks() {
 									@Override

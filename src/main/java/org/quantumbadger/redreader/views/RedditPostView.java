@@ -535,6 +535,7 @@ public final class RedditPostView extends FlingableItemView
 				.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(mActivity)
+				.setCache(true)
 				.setCallbacks(new CacheRequestCallbacks() {
 					@Override
 					public void onDataStreamComplete(

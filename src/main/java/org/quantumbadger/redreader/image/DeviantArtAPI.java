@@ -67,6 +67,7 @@ public final class DeviantArtAPI {
 				.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(context)
+				.setCache(true)
 				.setCallbacks(
 						new CacheRequestJSONParser(context, new CacheRequestJSONParser.Listener() {
 							@Override
@@ -77,8 +78,8 @@ public final class DeviantArtAPI {
 									final boolean fromCache) {
 
 								try {
-									final JsonObject outer = result.asObject().getObject("gfyItem");
-									listener.onSuccess(ImageInfo.parseGfycat(outer));
+									final JsonObject outer = result.asObject();
+									listener.onSuccess(ImageInfo.parseDeviantArt(outer));
 
 								} catch(final Throwable t) {
 									listener.onFailure(General.getGeneralErrorForFailure(

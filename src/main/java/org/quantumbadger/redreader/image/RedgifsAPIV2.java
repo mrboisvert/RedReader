@@ -96,6 +96,7 @@ public final class RedgifsAPIV2 {
 				.setQueueType(CacheRequest.DownloadQueueType.REDGIFS_API_V2)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(context)
+				.setCache(true)
 				.setCallbacks(
 					new CacheRequestJSONParser(context, new CacheRequestJSONParser.Listener() {
 						@Override

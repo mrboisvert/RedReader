@@ -58,6 +58,7 @@ public final class StreamableAPI {
 				.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 				.setRequestMethod(CacheRequest.RequestMethod.GET)
 				.setContext(context)
+				.setCache(true)
 				.setCallbacks(
 						new CacheRequestJSONParser(context, new CacheRequestJSONParser.Listener() {
 							@Override

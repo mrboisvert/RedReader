@@ -890,7 +890,7 @@ public class ImageViewActivity extends ViewsBaseActivity
 						.setFileType(Constants.FileType.IMAGE)
 						.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 						.setRequestMethod(CacheRequest.RequestMethod.GET)
-						.setCache(false)
+						.setCache(true)
 						.setContext(this)
 						.setCallbacks(new CacheRequestCallbacks() {
 							private boolean mProgressTextSet = false;
@@ -983,7 +983,7 @@ public class ImageViewActivity extends ViewsBaseActivity
 							.setFileType(Constants.FileType.IMAGE)
 							.setQueueType(CacheRequest.DownloadQueueType.IMMEDIATE)
 							.setRequestMethod(CacheRequest.RequestMethod.GET)
-							.setCache(false)
+							.setCache(true)
 							.setContext(this)
 							.setCallbacks(new CacheRequestCallbacks() {
 								@Override
